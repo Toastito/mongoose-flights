@@ -1,29 +1,30 @@
 <%- include('../partials/header') %>
-<form action="/flights" method="POST">
+<form class="vertical-form" action="/flights" method="POST">
+  <h2>Add New Flight</h2>
   <label for="airline">
     Airline:
-    <select name="airline">
-      <% flightSchema.obj.airline.enum.forEach((airline) => { %> 
-        <option value="<%= airline %>"><%= airline %></option>
-      <% }); %> 
-    </select>
   </label>
+  <select name="airline">
+    <% flightSchema.obj.airline.enum.forEach((airline) => { %> 
+      <option value="<%= airline %>"><%= airline %></option>
+    <% }); %> 
+  </select>
   <label for="airport">
     Airport:
-    <select name="airport">
-      <% flightSchema.obj.airport.enum.forEach((airport) => { %> 
-        <option value="<%= airport %>" <%- flightSchema.obj.airport.default === airport ? 'selected' : '' %> ><%= airport %></option>
-      <% }); %> 
-    </select>
   </label>
+  <select name="airport">
+    <% flightSchema.obj.airport.enum.forEach((airport) => { %> 
+      <option value="<%= airport %>" <%- flightSchema.obj.airport.default === airport ? 'selected' : '' %> ><%= airport %></option>
+    <% }); %> 
+  </select>
   <label for="flightNo">
     Flight Number:
-    <input type="number" name="flightNo">
   </label>
+  <input type="number" name="flightNo">
   <label for="departure">
     Departure:
-    <input type="datetime-local" name="departure" value="<%= departsDate %>">
   </label>
+  <input type="datetime-local" name="departure" value="<%= departsDate %>">
   <button type="submit">Add New Flight</button>
 </form> 
 <%- include('../partials/footer') %> 
