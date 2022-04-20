@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+<form action="/flights" method="POST">
+  <label for="airline">
+    Airline:
+    <select name="airline">
+      <% flightSchema.obj.airline.enum.forEach((airline) => { %> 
+        <option value="<%= airline %>"><%= airline %></option>
+      <% }); %> 
+    </select>
+  </label>
+  <label for="airport">
+    Airport:
+    <select name="airport">
+      <% flightSchema.obj.airport.enum.forEach((airport) => { %> 
+        <option value="<%= airport %>" <%- flightSchema.obj.airport.default === airport ? 'selected' : '' %> ><%= airport %></option>
+      <% }); %> 
+    </select>
+  </label>
+  <label for="flightNo">
+    Flight Number:
+    <input type="number" name="flightNo">
+  </label>
+  <label for="departure">
+    Departure:
+    <input type="datetime-local" name="departure" value="<%= departsDate %>">
+  </label>
+  <button type="submit">Add New Flight</button>
+</form> 
+<%- include('../partials/footer') %> 

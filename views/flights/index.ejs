@@ -1,0 +1,33 @@
+<%- include('../partials/header'); %> 
+  <h2>Flights Table</h2>
+  <form action="/flights" method="get" id="flights-list-sort">
+    <select name="order">
+      <option value="asc" <%- sort === 'asc' || !sort ? 'selected' : '' %>>Ascending</option>
+      <option value="desc" <%- sort === 'desc' ? 'selected' : '' %>>Descending</option>
+    </select>
+    <button type="submit">Apply</button>
+  </form>
+  <section class="flights">
+      <% flights.forEach((flight) => { %>
+        <article>
+          <section>
+            <p class="flight-info-head">Airline</p>
+            <p><%= flight.airline %></p>
+          </section>
+          <section>
+            <p class="flight-info-head">Airport</p>
+            <p><%= flight.airport %></p>
+          </section>
+          <section>
+            <p class="flight-info-head">Flight Number</p>
+            <p><%= flight.flightNo %></p>
+          </section>
+          <section>
+            <p class="flight-info-head">Departs</p>
+            <p><%= flight.departs.toLocaleString() %></p>
+          </section>
+          <a href="/flights/<%= flight._id %>" class="flight-details-link">Flight Details</a>
+        </article>
+      <% }); %>
+  </section>
+  <%- include('../partials/footer'); %> 

@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+
+<main>
+  <article class="flight-details">
+    <p><span>Airline: </span><%= flight.airline %></p>
+    <p><span>Airport: </span><%= flight.airport %></p>
+    <p><span>Flight Number: </span><%= flight.flightNo %></p>
+    <p><span>Depart Time: </span><%= flight.departs.toLocaleString() %></p>
+    <h2>Stops</h2>
+    <% flight.destinations.forEach((destination) => { %> 
+      <p><span>Airport: </span><%= destination.airport %></p>
+      <p><span>Arrival Time: </span><%= destination.arrival.toLocaleString() %></p>
+    <% }); %>
+    </article>
+    <form action="/flights/<%- flight._id %>/destinations" method="POST">
+      <label for="airport">
+        <select name="airport"> 
+          <% flightSchema.obj.airport.enum.forEach((airport) => { %>
+            <% if (!flight.destinations.map((destination) => destination.airport).includes(airport) && flight.airport !== airport) { %> 
+            <option value="<%= airport %>" <%- flightSchema.obj.airport.default === airport ? 'selected' : '' %> ><%= airport %></option>
+            <% } %> 
+          <% }); %> 
+        </select>
+        <label for="arrival">
+          Arrival:
+          <input type="datetime-local" name="arrival">
+        </label>
+        <button type="submit">Add Destinations</button>
+      </label>
+    </form>
+    <section id="tickets">
+      <a href="/flights/<%= flight._id %>/tickets/new">
+        <button>Add Ticket</button>
+      </a>
+      <%- tickets.length !== 0 ? `<h2>Tickets</h2>` : `<h2>No Tickets</h2>` %>
+      <% tickets.forEach((ticket) => { %> 
+        <article>
+          <section class="ticket-info">
+            <p><%= ticket.seat %></p>
+            <p><%= ticket.price %></p>
+            <p><%= ticket.flight %></p>
+          </section>
+          <form action="/tickets/<%= ticket._id %>?_method=DELETE" method="POST">
+            <button type="submit">Delete Ticket</button>
+          </form>
+        </article>  
+      <% }); %> 
+    </section>
+</main>
+
+<%- include('../partials/footer') %>
