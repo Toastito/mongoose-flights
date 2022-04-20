@@ -38,7 +38,7 @@
           <section class="ticket-info">
             <p><%= ticket.seat %></p>
             <p><%= ticket.price %></p>
-            <p><%= ticket.flight %></p>
+            <p><%= ticket._id %></p>
           </section>
           <form action="/tickets/<%= ticket._id %>?_method=DELETE" method="POST">
             <button type="submit">Delete Ticket</button>
