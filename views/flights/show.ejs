@@ -2,19 +2,48 @@
 
 <main>
   <section class="flight-details-control">
-    <article class="flight-details">
-      <p><span>Airline: </span><%= flight.airline %></p>
-      <p><span>Airport: </span><%= flight.airport %></p>
-      <p><span>Flight Number: </span><%= flight.flightNo %></p>
-      <p><span>Depart Time: </span><%= flight.departs.toLocaleString() %></p>
-      <h2>Stops</h2>
-      <% flight.destinations.forEach((destination) => { %> 
-        <p><span>Airport: </span><%= destination.airport %></p>
-        <p><span>Arrival Time: </span><%= destination.arrival.toLocaleString() %></p>
-      <% }); %>
+    <article class="flight-details-container">
+      <h2>Flight Information</h2>
+      <section class="flight-details">
+        <section class="departure">
+          <h3>Departure</h3>
+          <section class="departure-details">
+            <section>
+              <p class="flight-info-head">Airline</p>
+              <p><%= flight.airline %></p>
+            </section>
+            <section>
+              <p class="flight-info-head">Airport</p>
+              <p><%= flight.airport %></p>
+            </section>
+            <section>
+              <p class="flight-info-head">Flight Number</p>
+              <p><%= flight.flightNo %></p>
+            </section>
+            <section>
+              <p class="flight-info-head">Depart Time</p>
+              <p><%= flight.departs.toLocaleString() %></p>
+            </section>
+          </section>
+        </section>
+        <section class="stops-details">
+          <h3>Stops</h3>
+          <section class="flight-stops">
+            <% flight.destinations.forEach((destination) => { %>
+              <section>
+                <p class="flight-info-head">Airport</p>
+                <p><%= destination.airport %></p>
+                <p class="flight-info-head">Arrival Time</p>
+                <p><%= destination.arrival ? destination.arrival.toLocaleString() : '' %></p>
+              </section> 
+              <% }); %>
+          </section>
+        </section>
+      </section>
     </article>
-    <form class="vertical-form"action="/flights/<%- flight._id %>/destinations" method="POST">
+    <form class="vertical-form" id="add-destination" action="/flights/<%- flight._id %>/destinations" method="POST">
       <h2>Add Stops</h2>
+      <% if(flightSchema.obj.airport.enum.length !== flight.destinations.length + 1) { %> 
       <label for="airport">Airport</label>
         <select name="airport"> 
           <% flightSchema.obj.airport.enum.forEach((airport) => { %>
@@ -28,6 +57,9 @@
         </label>
         <input type="datetime-local" name="arrival">
         <button type="submit">Add Destination</button>
+      <% } else { %>
+        <h3>No more destinations available to add</h3>
+      <% } %>
     </form>
   </section>
   <section id="tickets">
@@ -40,11 +72,18 @@
     <section class="tickets-container">
     <% tickets.forEach((ticket) => { %>
         <article class="ticket">
-          <section class="ticket-info">
-            <p><%= ticket.seat %></p>
-            <p><%= ticket.price %></p>
-            <p><%= ticket._id %></p>
-          </section>
+            <section>
+              <h3>Seat</h3>
+              <p><%= ticket.seat %></p>
+            </section>
+            <section>
+              <h3>Price</h3>
+              <p>$<%= ticket.price %></p>
+            </section>
+            <section>
+              <h3>Ticket ID</h3>
+              <p><%= ticket._id %></p>
+            </section>
           <form action="/tickets/<%= ticket._id %>?_method=DELETE" method="POST">
             <button class='delete-btn'type="submit">Delete Ticket</button>
           </form>

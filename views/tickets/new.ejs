@@ -1,13 +1,14 @@
 <%- include('../partials/header') %>
-  <form action="/flights/<%= flightId %>/tickets" method="POST">
+  <form class="vertical-form" action="/flights/<%= flightId %>/tickets" method="POST">
+    <h2>Add New Ticket</h2>
     <label for="seat">
-      Seat:
-      <input type="text" name="seat" required pattern="[A-F][1-9]\d?">
+      Seat
     </label>
+    <input type="text" name="seat" required pattern="[A-F][1-9]\d?">
     <label for="price">
-      Price:
-      <input type="number" name="price">
+      Price
     </label>
+    <input type="number" name="price">
     <button type="submit">Add Ticket</button>
   </form>
 <%- include('../partials/footer') %> 
